@@ -1,0 +1,89 @@
+plugins {
+  id 'java-library'
+  id 'idea'
+  id 'maven-publish'
+  id "net.ltgt.errorprone" version "2.0.2"
+}
+
+repositories {
+  mavenCentral()
+}
+
+// sourceCompatibility = 1.8
+// https://docs.gradle.org/current/userguide/toolchains.html
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(8)
+  }
+}
+
+javadoc {
+  options.encoding = 'UTF-8'
+  if(JavaVersion.current().isJava9Compatible()) {
+    options.addBooleanOption('html5', true)
+  }
+}
+
+gradle.projectsEvaluated {
+  tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs.addAll(['-Xlint:all', '-parameters', '-g', '-Xmaxwarns', '999'])
+    //options.release = 8 // javac --release 8
+    options.deprecation = true
+    options.annotationProcessorPath = configurations.errorprone
+
+    options.errorprone {
+      enabled = false
+      disableWarningsInGeneratedCode = true
+      excludedPaths = ".*/build/gen.*/.*"
+      //disable("ParameterName") disable("UnusedVariable")
+      errorproneArgs = ["--illegal-access=warn"]
+    }
+  }
+}
+
+publishing {
+  publications {
+    maven(MavenPublication) {
+      from components.java
+    }
+  }
+}
+tasks.withType(GenerateModuleMetadata) {
+  enabled = false // don't generate Gradle's json metadata
+}
+
+// https://docs.gradle.org/current/userguide/publishing_maven.html
+java {
+  withSourcesJar()
+  withJavadocJar()
+}
+
+dependencies {
+  errorprone "com.google.errorprone:error_prone_core:latest.release"
+
+  implementation 'org.slf4j:slf4j-api:1.7.+'
+
+  testImplementation 'junit:junit:4.+'
+  testImplementation 'org.mockito:mockito-inline:+'
+  testImplementation "com.google.truth:truth:+"
+  testImplementation "com.google.truth.extensions:truth-java8-extension:+"
+}
+
+idea {
+  module {
+    downloadJavadoc = true
+    downloadSources = true
+  }
+}
+
+test {
+  useJUnit()
+  maxHeapSize = "500m"
+  enableAssertions = true
+
+  testLogging.showStandardStreams = true // show standard out & err of the test JVM on the console
+
+  System.setProperty("slf4j.detectLoggerNameMismatch", "true")
+  System.setProperty("file.encoding", "UTF-8")
+}
