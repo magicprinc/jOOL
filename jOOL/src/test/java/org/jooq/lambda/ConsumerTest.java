@@ -16,16 +16,16 @@
 
 package org.jooq.lambda;
 
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import org.jooq.lambda.function.Consumer0;
 import org.jooq.lambda.function.Consumer1;
 import org.jooq.lambda.function.Consumer2;
 import org.jooq.lambda.tuple.Tuple;
-import org.jooq.lambda.tuple.Tuple1;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+
+import static org.junit.Assert.*;
 
 /**
  * @author Lukas Eder

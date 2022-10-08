@@ -15,9 +15,12 @@
  */
 package org.jooq.lambda;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import org.jooq.lambda.fi.util.function.CheckedBinaryOperator;
+import org.jooq.lambda.fi.util.function.CheckedDoubleBinaryOperator;
+import org.jooq.lambda.fi.util.function.CheckedIntBinaryOperator;
+import org.jooq.lambda.fi.util.function.CheckedLongBinaryOperator;
+import org.junit.Test;
+
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.DoubleBinaryOperator;
@@ -27,11 +30,8 @@ import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
-import org.jooq.lambda.fi.util.function.CheckedBinaryOperator;
-import org.jooq.lambda.fi.util.function.CheckedDoubleBinaryOperator;
-import org.jooq.lambda.fi.util.function.CheckedIntBinaryOperator;
-import org.jooq.lambda.fi.util.function.CheckedLongBinaryOperator;
-import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * @author Lukas Eder

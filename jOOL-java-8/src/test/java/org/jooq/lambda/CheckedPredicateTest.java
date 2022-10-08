@@ -15,9 +15,12 @@
  */
 package org.jooq.lambda;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import org.jooq.lambda.fi.util.function.CheckedDoublePredicate;
+import org.jooq.lambda.fi.util.function.CheckedIntPredicate;
+import org.jooq.lambda.fi.util.function.CheckedLongPredicate;
+import org.jooq.lambda.fi.util.function.CheckedPredicate;
+import org.junit.Test;
+
 import java.util.function.Consumer;
 import java.util.function.DoublePredicate;
 import java.util.function.IntPredicate;
@@ -27,11 +30,8 @@ import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
-import org.jooq.lambda.fi.util.function.CheckedDoublePredicate;
-import org.jooq.lambda.fi.util.function.CheckedIntPredicate;
-import org.jooq.lambda.fi.util.function.CheckedLongPredicate;
-import org.jooq.lambda.fi.util.function.CheckedPredicate;
-import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * @author Lukas Eder

@@ -15,9 +15,12 @@
  */
 package org.jooq.lambda;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import org.jooq.lambda.fi.util.function.CheckedBiFunction;
+import org.jooq.lambda.fi.util.function.CheckedToDoubleBiFunction;
+import org.jooq.lambda.fi.util.function.CheckedToIntBiFunction;
+import org.jooq.lambda.fi.util.function.CheckedToLongBiFunction;
+import org.junit.Test;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -25,11 +28,8 @@ import java.util.function.Consumer;
 import java.util.function.ToDoubleBiFunction;
 import java.util.function.ToIntBiFunction;
 import java.util.function.ToLongBiFunction;
-import org.jooq.lambda.fi.util.function.CheckedBiFunction;
-import org.jooq.lambda.fi.util.function.CheckedToDoubleBiFunction;
-import org.jooq.lambda.fi.util.function.CheckedToIntBiFunction;
-import org.jooq.lambda.fi.util.function.CheckedToLongBiFunction;
-import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * @author Lukas Eder

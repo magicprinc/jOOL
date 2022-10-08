@@ -15,9 +15,12 @@
  */
 package org.jooq.lambda;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import org.jooq.lambda.fi.util.function.CheckedBiConsumer;
+import org.jooq.lambda.fi.util.function.CheckedObjDoubleConsumer;
+import org.jooq.lambda.fi.util.function.CheckedObjIntConsumer;
+import org.jooq.lambda.fi.util.function.CheckedObjLongConsumer;
+import org.junit.Test;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -25,11 +28,8 @@ import java.util.function.Consumer;
 import java.util.function.ObjDoubleConsumer;
 import java.util.function.ObjIntConsumer;
 import java.util.function.ObjLongConsumer;
-import org.jooq.lambda.fi.util.function.CheckedBiConsumer;
-import org.jooq.lambda.fi.util.function.CheckedObjDoubleConsumer;
-import org.jooq.lambda.fi.util.function.CheckedObjIntConsumer;
-import org.jooq.lambda.fi.util.function.CheckedObjLongConsumer;
-import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * @author Lukas Eder
