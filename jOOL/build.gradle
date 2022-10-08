@@ -2,15 +2,16 @@ plugins {
   id 'java-library'
   id 'idea'
   id 'maven-publish'
-  id "net.ltgt.errorprone" version "2.0.2"
+  id "net.ltgt.errorprone" version "2.+"
+  //id "org.checkerframework" version "+"
+  //id 'io.franzbecker.gradle-lombok' version "5.+"
 }
 
 repositories {
   mavenCentral()
 }
 
-// sourceCompatibility = 1.11
-// https://docs.gradle.org/current/userguide/toolchains.html
+// sourceCompatibility = 1.11 → https://docs.gradle.org/current/userguide/toolchains.html
 java {
   toolchain {
     languageVersion = JavaLanguageVersion.of(11)
@@ -34,8 +35,7 @@ gradle.projectsEvaluated {
       enabled = false
       disableWarningsInGeneratedCode = true
       excludedPaths = ".*/build/gen.*/.*"
-      //disable("ParameterName") disable("UnusedVariable")
-      errorproneArgs = ["--illegal-access=warn"]
+      //disable("ParameterName") disable("UnusedVariable") errorproneArgs = ["--illegal-access=warn"]
     }
   }
 }
@@ -60,12 +60,14 @@ java {
 dependencies {
   errorprone "com.google.errorprone:error_prone_core:latest.release"
 
-  implementation 'org.slf4j:slf4j-api:1.7.+'
+  //implementation 'org.checkerframework:checker-qual:3.+'
+  //private static final System.Logger log = System.getLogger("c.f.b.DefaultLogger");
+  //implementation 'org.slf4j:slf4j-api:1.7.+'
 
   testImplementation 'junit:junit:4.+'
-  testImplementation 'org.mockito:mockito-inline:+'
-  testImplementation "com.google.truth:truth:+"
-  testImplementation "com.google.truth.extensions:truth-java8-extension:+"
+  //testImplementation 'org.mockito:mockito-inline:+'
+  //testImplementation "com.google.truth:truth:+"
+  //testImplementation "com.google.truth.extensions:truth-java8-extension:+"
 }
 
 idea {
@@ -85,3 +87,8 @@ test {
   System.setProperty("slf4j.detectLoggerNameMismatch", "true")
   System.setProperty("file.encoding", "UTF-8")
 }
+
+//lombok {
+//  version = "1.+"
+//  sha256 = "" // don't verify lombok.jar
+//}
