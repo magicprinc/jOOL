@@ -1,9 +1,10 @@
 package org.jooq.lambda;
 
-import static org.junit.Assert.assertNull;
+import org.junit.Test;
 
 import java.util.concurrent.CompletionStage;
-import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class AsyncTest {
     

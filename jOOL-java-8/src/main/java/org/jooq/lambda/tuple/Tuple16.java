@@ -15,6 +15,9 @@
  */
 package org.jooq.lambda.tuple;
 
+import org.jooq.lambda.Seq;
+import org.jooq.lambda.function.Function16;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -24,10 +27,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
-
-import org.jooq.lambda.Seq;                
-import org.jooq.lambda.function.Function1;
-import org.jooq.lambda.function.Function16;
 
 /**
  * A tuple of degree 16.
