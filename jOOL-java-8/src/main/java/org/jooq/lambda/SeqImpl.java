@@ -15,8 +15,7 @@
  */
 package org.jooq.lambda;
 
-import static java.util.Comparator.naturalOrder;
-import static java.util.stream.Collectors.*;
+import org.jooq.lambda.tuple.Tuple;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,7 +46,10 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
-import org.jooq.lambda.tuple.Tuple;
+import static java.util.Comparator.naturalOrder;
+import static java.util.stream.Collectors.summingDouble;
+import static java.util.stream.Collectors.summingInt;
+import static java.util.stream.Collectors.summingLong;
 
 /**
  * @author Lukas Eder

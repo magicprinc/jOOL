@@ -15,11 +15,15 @@
  */
 package org.jooq.lambda;
 
-import java.util.*;
+import org.jooq.lambda.tuple.Tuple2;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
-
-import org.jooq.lambda.tuple.Tuple2;
 
 /**
  * @author Lukas Eder

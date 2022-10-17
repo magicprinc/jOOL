@@ -16,10 +16,10 @@
 package org.jooq.lambda;
 
 
-import org.jooq.lambda.fi.util.function.*;
 import org.jooq.lambda.fi.lang.CheckedRunnable;
 import org.jooq.lambda.fi.util.CheckedComparator;
 import org.jooq.lambda.fi.util.concurrent.CheckedCallable;
+import org.jooq.lambda.fi.util.function.*;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
