@@ -87,10 +87,10 @@ public class ExtraMagicTest {
   @Test(expected = IOError.class)
   public void andThen () {
     Error e1 = new Error("test1: → ERROR is OK here!!!");
-    Unchecked.PRINT_STACK_TRACE.accept(e1);
+    Wrap.PRINT_STACK_TRACE.accept(e1);
 
     IOError e2 = new IOError(e1);
-    Consumer<Throwable> c = Unchecked.SILENT_IGNORE
+    Consumer<Throwable> c = Wrap.SILENT_IGNORE
         .andThen((t) -> fail("unreachable. But: " + t));
     c.accept(e2);
 

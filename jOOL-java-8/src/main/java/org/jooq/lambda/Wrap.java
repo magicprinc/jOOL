@@ -603,7 +603,7 @@ public class Wrap {
 
 
   public static DoubleToLongFunction doubleToLongFunction (CheckedDoubleToLongFunction unsafeFunction, BiFunction<Double,Throwable,Long> handler) {
-    return (value) -> {
+    return (double value) -> {
       try {
         return unsafeFunction.applyAsLong(value);
       } catch (Throwable t) {
@@ -612,8 +612,8 @@ public class Wrap {
     };
   }
 
-  public static DoubleToLongFunction doubleToLongFunctionDef (CheckedDoubleToLongFunction unsafeFunction, int def) {
-    return (value) -> {
+  public static DoubleToLongFunction doubleToLongFunctionDef (CheckedDoubleToLongFunction unsafeFunction, long def) {
+    return (double value) -> {
       try {
         return unsafeFunction.applyAsLong(value);
       } catch (Throwable t) {

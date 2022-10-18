@@ -31,7 +31,7 @@ public class Loops {
   /**
    Simple while-loop (numberOfRepetitions .. 0].
    <pre>{@code}
-   while (numberOfRepetitions-- > 0)
+   while (numberOfRepetitions-- &gt; 0)
      body.accept(numberOfRepetitions);
    }</pre>
    */

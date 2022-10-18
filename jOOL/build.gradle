@@ -30,7 +30,7 @@ gradle.projectsEvaluated {
     options.annotationProcessorPath = configurations.errorprone
 
     options.errorprone {
-      enabled = true
+      enabled = true  // <<<!!! You can disable Error-Prone here!
       disableWarningsInGeneratedCode = true
       excludedPaths = ".*/build/gen.*/.*"
       //disable("ParameterName") disable("UnusedVariable") errorproneArgs = ["--illegal-access=warn"]
@@ -49,6 +49,7 @@ publishing {
 tasks.withType(GenerateModuleMetadata) {
   enabled = false // don't generate Gradle's json metadata
 }
+// generate -src and -javadoc .jars
 // https://docs.gradle.org/current/userguide/publishing_maven.html
 java {
   withSourcesJar()
@@ -57,13 +58,13 @@ java {
 
 dependencies {
   errorprone "com.google.errorprone:error_prone_core:latest.release"
-
   //implementation 'org.checkerframework:checker-qual:3.+'
 
   testImplementation 'junit:junit:4.+'
   //testImplementation 'org.mockito:mockito-inline:+'
   //testImplementation "com.google.truth:truth:+"
   //testImplementation "com.google.truth.extensions:truth-java8-extension:+"
+
   testRuntimeOnly 'org.slf4j:slf4j-api:2.+'
   testRuntimeOnly 'org.slf4j:slf4j-simple:2.+'
 

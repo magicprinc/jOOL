@@ -114,14 +114,16 @@ public class LoopsTest {
   @Test public void testLoopMeasured () {
     Tuple4<Long, LongSummaryStatistics, Exception, String> st = loopMeasured(0, null);
     System.out.println(st);
-    assertEquals("LongSummaryStatistics{count=0, sum=0, min=9223372036854775807, average=0,000000, max=-9223372036854775808}", st.v2.toString());
+    assertEquals("LongSummaryStatistics{count=0, sum=0, min=9223372036854775807, average=0,000000, max=-9223372036854775808}",
+      st.v2.toString().replace('.',','));
     st = loopMeasured(0, null);
     assertEquals(0, st.v2.getCount());
     st = loopMeasured(-2, null);
     assertEquals(0, st.v2.getCount());
 
     st = loopMeasured(1, null);
-    assertTrue(st.v3.toString().startsWith("java.lang.NullPointerException: Cannot invoke \"java.lang.Runnable.run()\" because \"body\" is null"));
+    assertTrue(st.toString(),//17: java.lang.NullPointerException: Cannot invoke "java.lang.Runnable.run()" because "body" is null
+      st.v3 instanceof NullPointerException);
     assertEquals(1, st.v2.getCount());
 
     final AtomicLong counter = new AtomicLong();
