@@ -1,3 +1,5 @@
+[![Java CI with Gradle](https://github.com/magicprinc/jOOL/actions/workflows/gradle.yml/badge.svg)](https://github.com/magicprinc/jOOL/actions/workflows/gradle.yml)
+
 jOOλ
 ====
 
