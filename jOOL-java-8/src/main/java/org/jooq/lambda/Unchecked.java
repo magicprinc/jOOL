@@ -44,7 +44,26 @@ public final class Unchecked {
     /**
      * A {@link Consumer} that wraps any {@link Throwable} in a {@link RuntimeException}.
      */
-    public static final Consumer<Throwable> THROWABLE_TO_RUNTIME_EXCEPTION = t -> {
+    public static final Consumer<Throwable> THROWABLE_TO_RUNTIME_EXCEPTION = Unchecked::throwUnchecked;
+
+    /**
+     * A {@link Consumer} that rethrows all exceptions, including checked exceptions.
+     */
+    public static final Consumer<Throwable> RETHROW_ALL = SeqUtils::sneakyThrow;
+
+
+
+    /**
+     * "sneaky-throw" a checked exception or throwable.
+     */
+    public static void throwChecked(Throwable t) {
+        SeqUtils.sneakyThrow(t);
+    }
+
+    /**
+     * An Unchecked strategy to handle Throwable: wrap any {@link Throwable} in a {@link RuntimeException}
+     */
+    public static void throwUnchecked(Throwable t) throws UncheckedException, UncheckedIOException, RuntimeException, Error {
         if (t instanceof Error)
             throw (Error) t;
 
@@ -53,24 +72,12 @@ public final class Unchecked {
 
         if (t instanceof IOException)
             throw new UncheckedIOException((IOException) t);
-        
+
         // [#230] Clients will not expect needing to handle this.
         if (t instanceof InterruptedException)
             Thread.currentThread().interrupt();
-        
+
         throw new UncheckedException(t);
-    };
-    
-    /**
-     * A {@link Consumer} that rethrows all exceptions, including checked exceptions.
-     */
-    public static final Consumer<Throwable> RETHROW_ALL = SeqUtils::sneakyThrow;
-    
-    /**
-     * "sneaky-throw" a checked exception or throwable.
-     */
-    public static void throwChecked(Throwable t) {
-        SeqUtils.sneakyThrow(t);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

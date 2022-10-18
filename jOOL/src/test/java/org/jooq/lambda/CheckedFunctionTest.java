@@ -15,21 +15,9 @@
  */
 package org.jooq.lambda;
 
-import org.jooq.lambda.fi.util.function.CheckedDoubleFunction;
-import org.jooq.lambda.fi.util.function.CheckedDoubleToIntFunction;
-import org.jooq.lambda.fi.util.function.CheckedDoubleToLongFunction;
-import org.jooq.lambda.fi.util.function.CheckedFunction;
-import org.jooq.lambda.fi.util.function.CheckedIntFunction;
-import org.jooq.lambda.fi.util.function.CheckedIntToDoubleFunction;
-import org.jooq.lambda.fi.util.function.CheckedIntToLongFunction;
-import org.jooq.lambda.fi.util.function.CheckedLongFunction;
-import org.jooq.lambda.fi.util.function.CheckedLongToDoubleFunction;
-import org.jooq.lambda.fi.util.function.CheckedLongToIntFunction;
-import org.jooq.lambda.fi.util.function.CheckedToDoubleFunction;
-import org.jooq.lambda.fi.util.function.CheckedToIntFunction;
-import org.jooq.lambda.fi.util.function.CheckedToLongFunction;
-import org.junit.Test;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -50,8 +38,20 @@ import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
-
-import static org.junit.Assert.*;
+import org.jooq.lambda.fi.util.function.CheckedDoubleFunction;
+import org.jooq.lambda.fi.util.function.CheckedDoubleToIntFunction;
+import org.jooq.lambda.fi.util.function.CheckedDoubleToLongFunction;
+import org.jooq.lambda.fi.util.function.CheckedFunction;
+import org.jooq.lambda.fi.util.function.CheckedIntFunction;
+import org.jooq.lambda.fi.util.function.CheckedIntToDoubleFunction;
+import org.jooq.lambda.fi.util.function.CheckedIntToLongFunction;
+import org.jooq.lambda.fi.util.function.CheckedLongFunction;
+import org.jooq.lambda.fi.util.function.CheckedLongToDoubleFunction;
+import org.jooq.lambda.fi.util.function.CheckedLongToIntFunction;
+import org.jooq.lambda.fi.util.function.CheckedToDoubleFunction;
+import org.jooq.lambda.fi.util.function.CheckedToIntFunction;
+import org.jooq.lambda.fi.util.function.CheckedToLongFunction;
+import org.junit.Test;
 
 /**
  * @author Lukas Eder

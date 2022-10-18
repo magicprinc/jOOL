@@ -1,11 +1,10 @@
 package org.jooq.lambda;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicBoolean;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  *

@@ -28,6 +28,8 @@ import java.util.function.*;
  */
 public final class Blocking {
 
+    @SuppressWarnings("ReturnValueIgnored")
+    // Error Prone shows error: [ReturnValueIgnored] Return value of 'get' must be used → .get()
     public static Runnable runnable(Runnable runnable) {
         return () -> supplier(() -> { runnable.run(); return null; }).get();
     }

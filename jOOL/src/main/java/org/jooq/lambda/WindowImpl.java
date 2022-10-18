@@ -212,7 +212,7 @@ class WindowImpl<T> implements Window<T> {
     
     @Override
     public long count() {
-        return 1 + upper() - lower();
+        return 1L + upper() - lower();
     }
 
     @Override
@@ -581,7 +581,7 @@ class WindowImpl<T> implements Window<T> {
         return toMap(keyMapper, Function.identity());
     }
 
-    @Override
+    @Override @SuppressWarnings("StreamToString")
     public String toString() {
         return partition.cacheIf(completePartition(), "toString", () -> window().toString());
     }

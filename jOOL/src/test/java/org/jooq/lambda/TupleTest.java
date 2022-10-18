@@ -15,9 +15,17 @@
  */
 package org.jooq.lambda;
 
-import org.jooq.lambda.tuple.Tuple2;
-import org.jooq.lambda.tuple.Tuple5;
-import org.junit.Test;
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.averagingInt;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.mapping;
+import static org.jooq.lambda.tuple.Tuple.collectors;
+import static org.jooq.lambda.tuple.Tuple.range;
+import static org.jooq.lambda.tuple.Tuple.tuple;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -30,15 +38,11 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
 
-import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.averagingInt;
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.mapping;
-import static org.jooq.lambda.tuple.Tuple.collectors;
-import static org.jooq.lambda.tuple.Tuple.range;
-import static org.jooq.lambda.tuple.Tuple.tuple;
-import static org.junit.Assert.*;
+import org.jooq.lambda.tuple.Tuple2;
+
+import org.jooq.lambda.tuple.Tuple5;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Lukas Eder

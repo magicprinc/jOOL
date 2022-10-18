@@ -23,6 +23,8 @@ import java.util.function.Predicate;
  * @author Lukas Eder
  */
 public final class Functions {
+    private Functions () {}
+
 
     /**
      * Negate a predicate.

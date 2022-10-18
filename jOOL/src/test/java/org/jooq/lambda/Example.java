@@ -1,17 +1,18 @@
 package org.jooq.lambda;
 
-import org.jooq.lambda.tuple.Tuple3;
-import org.jooq.lambda.tuple.Tuple4;
-
 import java.math.BigDecimal;
+
+import static org.jooq.lambda.tuple.Tuple.tuple;
+import static java.util.Comparator.naturalOrder;
+import static java.util.Comparator.reverseOrder;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import org.jooq.lambda.tuple.Tuple3;
 
-import static java.util.Comparator.naturalOrder;
-import static java.util.Comparator.reverseOrder;
-import static org.jooq.lambda.tuple.Tuple.tuple;
+import org.jooq.lambda.tuple.Tuple4;
 
 public class Example {
     public static void main(String[] args) {
