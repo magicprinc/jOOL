@@ -15,50 +15,20 @@
  */
 package org.jooq.lambda.tuple;
 
+import org.jooq.lambda.Seq;
+import org.jooq.lambda.function.*;
+
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
-
-import org.jooq.lambda.Seq;
-import org.jooq.lambda.function.Consumer0;
-import org.jooq.lambda.function.Consumer1;
-import org.jooq.lambda.function.Consumer2;
-import org.jooq.lambda.function.Consumer3;
-import org.jooq.lambda.function.Consumer4;
-import org.jooq.lambda.function.Consumer5;
-import org.jooq.lambda.function.Consumer6;
-import org.jooq.lambda.function.Consumer7;
-import org.jooq.lambda.function.Consumer8;
-import org.jooq.lambda.function.Consumer9;
-import org.jooq.lambda.function.Consumer10;
-import org.jooq.lambda.function.Consumer11;
-import org.jooq.lambda.function.Consumer12;
-import org.jooq.lambda.function.Consumer13;
-import org.jooq.lambda.function.Consumer14;
-import org.jooq.lambda.function.Consumer15;
-import org.jooq.lambda.function.Consumer16;
-import org.jooq.lambda.function.Function0;
-import org.jooq.lambda.function.Function1;
-import org.jooq.lambda.function.Function2;
-import org.jooq.lambda.function.Function3;
-import org.jooq.lambda.function.Function4;
-import org.jooq.lambda.function.Function5;
-import org.jooq.lambda.function.Function6;
-import org.jooq.lambda.function.Function7;
-import org.jooq.lambda.function.Function8;
-import org.jooq.lambda.function.Function9;
-import org.jooq.lambda.function.Function10;
-import org.jooq.lambda.function.Function11;
-import org.jooq.lambda.function.Function12;
-import org.jooq.lambda.function.Function13;
-import org.jooq.lambda.function.Function14;
-import org.jooq.lambda.function.Function15;
-import org.jooq.lambda.function.Function16;
+import java.util.stream.Collector;
 
 /**
  * A tuple.
@@ -423,6 +393,127 @@ public interface Tuple extends Iterable<Object> {
     static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Consumer1<Tuple16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> consumer(Consumer16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> consumer) {
         return t -> consumer.accept(t.v1, t.v2, t.v3, t.v4, t.v5, t.v6, t.v7, t.v8, t.v9, t.v10, t.v11, t.v12, t.v13, t.v14, t.v15, t.v16);
     }
+
+
+    /**
+     * Construct a tuple predicate of degree 0.
+     */
+    static <R> Predicate1<Tuple0> predicate(BooleanSupplier predicate) {
+        return t -> predicate.getAsBoolean();
+    }
+
+    /**
+     * Construct a tuple predicate of degree 1.
+     */
+    static <T1> Predicate1<Tuple1<T1>> predicate(Predicate<T1> predicate) {
+        return t -> predicate.test(t.v1);
+    }
+
+    /**
+     * Construct a tuple predicate of degree 2.
+     */
+    static <T1,T2> Predicate1<Tuple2<T1,T2>> predicate(BiPredicate<T1,T2> predicate) {
+        return t -> predicate.test(t.v1, t.v2);
+    }
+
+    /**
+     * Construct a tuple predicate of degree 3.
+     */
+    static <T1,T2,T3> Predicate1<Tuple3<T1,T2,T3>> predicate(Predicate3<T1,T2,T3> predicate) {
+        return t -> predicate.test(t.v1, t.v2, t.v3);
+    }
+
+    /**
+     * Construct a tuple predicate of degree 4.
+     */
+    static <T1,T2,T3,T4> Predicate1<Tuple4<T1,T2,T3,T4>> predicate(Predicate4<T1,T2,T3,T4> predicate) {
+        return t -> predicate.test(t.v1, t.v2, t.v3, t.v4);
+    }
+
+    /**
+     * Construct a tuple predicate of degree 5.
+     */
+    static <T1,T2,T3,T4,T5> Predicate1<Tuple5<T1,T2,T3,T4,T5>> predicate(Predicate5<T1,T2,T3,T4,T5> predicate) {
+        return t -> predicate.test(t.v1, t.v2, t.v3, t.v4, t.v5);
+    }
+
+    /**
+     * Construct a tuple predicate of degree 6.
+     */
+    static <T1,T2,T3,T4,T5,T6> Predicate1<Tuple6<T1,T2,T3,T4,T5,T6>> predicate(Predicate6<T1,T2,T3,T4,T5,T6> predicate) {
+        return t -> predicate.test(t.v1, t.v2, t.v3, t.v4, t.v5, t.v6);
+    }
+
+    /**
+     * Construct a tuple predicate of degree 7.
+     */
+    static <T1,T2,T3,T4,T5,T6,T7> Predicate1<Tuple7<T1,T2,T3,T4,T5,T6,T7>> predicate(Predicate7<T1,T2,T3,T4,T5,T6,T7> predicate) {
+        return t -> predicate.test(t.v1, t.v2, t.v3, t.v4, t.v5, t.v6, t.v7);
+    }
+
+    /**
+     * Construct a tuple predicate of degree 8.
+     */
+    static <T1,T2,T3,T4,T5,T6,T7,T8> Predicate1<Tuple8<T1,T2,T3,T4,T5,T6,T7,T8>> predicate(Predicate8<T1,T2,T3,T4,T5,T6,T7,T8> predicate) {
+        return t -> predicate.test(t.v1, t.v2, t.v3, t.v4, t.v5, t.v6, t.v7, t.v8);
+    }
+
+    /**
+     * Construct a tuple predicate of degree 9.
+     */
+    static <T1,T2,T3,T4,T5,T6,T7,T8,T9> Predicate1<Tuple9<T1,T2,T3,T4,T5,T6,T7,T8,T9>> predicate(Predicate9<T1,T2,T3,T4,T5,T6,T7,T8,T9> predicate) {
+        return t -> predicate.test(t.v1, t.v2, t.v3, t.v4, t.v5, t.v6, t.v7, t.v8, t.v9);
+    }
+
+    /**
+     * Construct a tuple predicate of degree 10.
+     */
+    static <T1,T2,T3,T4,T5,T6,T7,T8,T9,T10> Predicate1<Tuple10<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>> predicate(Predicate10<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10> predicate) {
+        return t -> predicate.test(t.v1, t.v2, t.v3, t.v4, t.v5, t.v6, t.v7, t.v8, t.v9, t.v10);
+    }
+
+    /**
+     * Construct a tuple predicate of degree 11.
+     */
+    static <T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11> Predicate1<Tuple11<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>> predicate(Predicate11<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11> predicate) {
+        return t -> predicate.test(t.v1, t.v2, t.v3, t.v4, t.v5, t.v6, t.v7, t.v8, t.v9, t.v10, t.v11);
+    }
+
+    /**
+     * Construct a tuple predicate of degree 12.
+     */
+    static <T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12> Predicate1<Tuple12<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12>> predicate(Predicate12<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12> predicate) {
+        return t -> predicate.test(t.v1, t.v2, t.v3, t.v4, t.v5, t.v6, t.v7, t.v8, t.v9, t.v10, t.v11, t.v12);
+    }
+
+    /**
+     * Construct a tuple predicate of degree 13.
+     */
+    static <T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13> Predicate1<Tuple13<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13>> predicate(Predicate13<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13> predicate) {
+        return t -> predicate.test(t.v1, t.v2, t.v3, t.v4, t.v5, t.v6, t.v7, t.v8, t.v9, t.v10, t.v11, t.v12, t.v13);
+    }
+
+    /**
+     * Construct a tuple predicate of degree 14.
+     */
+    static <T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14> Predicate1<Tuple14<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14>> predicate(Predicate14<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14> predicate) {
+        return t -> predicate.test(t.v1, t.v2, t.v3, t.v4, t.v5, t.v6, t.v7, t.v8, t.v9, t.v10, t.v11, t.v12, t.v13, t.v14);
+    }
+
+    /**
+     * Construct a tuple predicate of degree 15.
+     */
+    static <T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15> Predicate1<Tuple15<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>> predicate(Predicate15<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15> predicate) {
+        return t -> predicate.test(t.v1, t.v2, t.v3, t.v4, t.v5, t.v6, t.v7, t.v8, t.v9, t.v10, t.v11, t.v12, t.v13, t.v14, t.v15);
+    }
+
+    /**
+     * Construct a tuple predicate of degree 16.
+     */
+    static <T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16> Predicate1<Tuple16<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16>> predicate(Predicate16<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16> predicate) {
+        return t -> predicate.test(t.v1, t.v2, t.v3, t.v4, t.v5, t.v6, t.v7, t.v8, t.v9, t.v10, t.v11, t.v12, t.v13, t.v14, t.v15, t.v16);
+    }
+
 
     /**
      * Construct a tuple collector of degree 1.
