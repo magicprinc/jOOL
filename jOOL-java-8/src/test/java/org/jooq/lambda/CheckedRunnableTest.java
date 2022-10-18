@@ -15,12 +15,12 @@
  */
 package org.jooq.lambda;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+import java.util.function.Consumer;
 import org.jooq.lambda.fi.lang.CheckedRunnable;
 import org.junit.Test;
-
-import java.util.function.Consumer;
-
-import static org.junit.Assert.*;
 
 /**
  * @author Lukas Eder

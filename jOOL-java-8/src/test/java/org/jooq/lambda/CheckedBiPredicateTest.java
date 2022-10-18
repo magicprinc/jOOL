@@ -15,13 +15,13 @@
  */
 package org.jooq.lambda;
 
-import org.jooq.lambda.fi.util.function.CheckedBiPredicate;
-import org.junit.Test;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
-
-import static org.junit.Assert.*;
+import org.jooq.lambda.fi.util.function.CheckedBiPredicate;
+import org.junit.Test;
 
 /**
  * @author Lukas Eder
