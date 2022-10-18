@@ -24,6 +24,7 @@ import org.junit.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Proxy;
+import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -150,7 +151,11 @@ public class GenericPredicateTest {
       for (Constructor<?> ctor : cls.getConstructors()) {
         if (ctor.getParameterCount() == size) {
 
-          return (T) ctor.newInstance(args);
+          T tr = (T) ctor.newInstance(args);
+          T tw = Wrap.tuple(args);
+
+          assertEquals(tr, tw);
+          return tr;
         }
       }
     } catch (Exception e) {
@@ -646,5 +651,47 @@ public class GenericPredicateTest {
     assertEquals(pv, p.applyPartially(10,11,12,13,14,15,16,17,18,19,20,21,22,23).test(24,25));
     assertEquals(pv, p.applyPartially(10,11,12,13,14,15,16,17,18,19,20,21,22,23,24).test(25));
     assertEquals(pv, p.applyPartially(10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25).test());
+  }
+
+
+  Object[] gen (int size) {
+    Integer[] a = new Integer[size];
+    Loops.forLoop(size, i->a[i]=i+1);
+    return a;
+  }
+  String str (Object[] arr) {
+    return Arrays.toString(arr).replace('[','(').replace(']', ')');
+  }
+  @Test
+  public void wrapTuple () {
+    assertEquals("()", Wrap.tuple().toString());
+    assertTrue(Wrap.tuple() instanceof Tuple0);
+    assertEquals("()", Wrap.tuple(null).toString());
+    assertTrue(Wrap.tuple(null) instanceof Tuple0);
+    assertEquals("()", Wrap.tuple(gen(0)).toString());
+    assertEquals("(1)", Wrap.tuple(gen(1)).toString());
+    assertEquals("(1, 2)", Wrap.tuple(gen(2)).toString());
+    assertEquals("(1, 2, 3)", Wrap.tuple(gen(3)).toString());
+    assertEquals("(1, 2, 3, 4)", Wrap.tuple(gen(4)).toString());
+    assertEquals("(1, 2, 3, 4, 5)", Wrap.tuple(gen(5)).toString());
+    assertEquals("(1, 2, 3, 4, 5, 6)", Wrap.tuple(gen(6)).toString());
+    assertEquals(str(gen(7)), Wrap.tuple(gen(7)).toString());
+    assertEquals(str(gen(8)), Wrap.tuple(gen(8)).toString());
+    assertEquals(str(gen(9)), Wrap.tuple(gen(9)).toString());
+    assertEquals(str(gen(10)), Wrap.tuple(gen(10)).toString());
+    assertEquals(str(gen(11)), Wrap.tuple(gen(11)).toString());
+    assertEquals(str(gen(12)), Wrap.tuple(gen(12)).toString());
+    assertEquals(str(gen(13)), Wrap.tuple(gen(13)).toString());
+    assertEquals(str(gen(14)), Wrap.tuple(gen(14)).toString());
+    assertEquals(str(gen(15)), Wrap.tuple(gen(15)).toString());
+    assertEquals(str(gen(16)), Wrap.tuple(gen(16)).toString());
+    assertTrue(Wrap.tuple(gen(16)) instanceof Tuple16);
+
+    try {
+      Wrap.tuple(gen(17));
+      fail("unreachable");
+    } catch (IllegalArgumentException e) {
+      assertEquals("java.lang.IllegalArgumentException: Unknown Tuple degree: 17 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]", e.toString());
+    }
   }
 }

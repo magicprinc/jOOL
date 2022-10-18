@@ -3,6 +3,7 @@ package org.jooq.lambda;
 import org.jooq.lambda.tuple.Tuple4;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LongSummaryStatistics;
 import java.util.function.IntConsumer;
 import java.util.function.IntUnaryOperator;
@@ -118,9 +119,10 @@ public class Loops {
   }
 
 
-  public static class Incrementer {
+  public static class Incrementer implements Cloneable, Iterable<Incrementer> {
     protected final int[] indexes;
     private final IntUnaryOperator maxForIndex;
+    protected long count;
 
     /** All indexes have the same max and rotate in range [0..maxExclusive)
      @param degree size of index vector = how many nested for-loops
@@ -161,8 +163,24 @@ public class Loops {
       return maxForIndex.applyAsInt(indexIndex);
     }
 
+    public long getCount () {
+      return count;
+    }
+
+
     @Override public String toString () {
-      return "Incrementer"+ Arrays.toString(indexes);
+      return "Incrementer"+ Arrays.toString(indexes) +" @ "+getCount();
+    }
+
+
+    private Incrementer (int[] indexes, IntUnaryOperator maxForIndex) {
+      this.indexes = indexes;
+      this.maxForIndex = maxForIndex;
+    }//new
+
+    @SuppressWarnings("CloneDoesntDeclareCloneNotSupportedException")
+    @Override protected Incrementer clone () {
+      return new Incrementer(indexes.clone(), maxForIndex);
     }
 
 
@@ -175,10 +193,9 @@ public class Loops {
      @see #forLoop(Predicate)
      */
     public boolean incrementIndexVector () {
-      final int len = indexes.length;
-
-      for (int i = 0; i < len; ) {
-        if (++indexes[i] < maxForIndex.applyAsInt(i)) {
+      count++;
+      for (int i = 0, len = indexes.length; i < len; ) {
+        if (++indexes[i] < maxAt(i)) {
           return false;
 
         } else {// overflow
@@ -205,6 +222,48 @@ public class Loops {
           return false;
         }
       }
+    }
+
+
+    public int[] toArray () {
+      return indexes.clone();
+    }
+
+    public Integer[] toIntegerArray () {
+      final int len = indexes.length;
+      Integer[] r = new Integer[len];
+
+      for (int i = 0; i < len; i++) {
+        r[i] = indexes[i];
+      }
+      return r;
+    }
+
+
+    @Override public Iterator<Incrementer> iterator () {
+      return new Iterator<Incrementer>() {
+        final Incrementer snapshot = Incrementer.this.clone();
+        boolean hasNext = true;
+
+        @Override public boolean hasNext () {
+          return hasNext;
+        }
+
+        @Override public Incrementer next () {
+          boolean overflow = snapshot.incrementIndexVector();
+          hasNext = !overflow;
+
+          return snapshot;
+        }
+
+        @Override public String toString () {
+          return "Iterator."+ snapshot + (hasNext? " >":" #");
+        }
+      };
+    }
+
+    public Seq<Incrementer> seq () {
+      return Seq.seq(this);
     }
   }//Incrementer
 

@@ -28,9 +28,28 @@ import org.jooq.lambda.fi.util.function.CheckedToLongFunction;
 import org.jooq.lambda.function.Function3;
 import org.jooq.lambda.function.Predicate2;
 import org.jooq.lambda.function.Predicate3;
+import org.jooq.lambda.tuple.Tuple;
+import org.jooq.lambda.tuple.Tuple0;
+import org.jooq.lambda.tuple.Tuple1;
+import org.jooq.lambda.tuple.Tuple10;
+import org.jooq.lambda.tuple.Tuple11;
+import org.jooq.lambda.tuple.Tuple12;
+import org.jooq.lambda.tuple.Tuple13;
+import org.jooq.lambda.tuple.Tuple14;
+import org.jooq.lambda.tuple.Tuple15;
+import org.jooq.lambda.tuple.Tuple16;
+import org.jooq.lambda.tuple.Tuple2;
+import org.jooq.lambda.tuple.Tuple3;
+import org.jooq.lambda.tuple.Tuple4;
+import org.jooq.lambda.tuple.Tuple5;
+import org.jooq.lambda.tuple.Tuple6;
+import org.jooq.lambda.tuple.Tuple7;
+import org.jooq.lambda.tuple.Tuple8;
+import org.jooq.lambda.tuple.Tuple9;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.Arrays;
 import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
@@ -101,6 +120,13 @@ public class Wrap {
    */
   public static final Consumer<Throwable> PRINT_STACK_TRACE = Throwable::printStackTrace;
 
+  /**
+   Can be used in tests:
+   Thread.currentThread().setUncaughtExceptionHandler(Wrap.LOGGING_UNCAUGHT_EXCEPTION_HANDLER);
+   Thread.setDefaultUncaughtExceptionHandler(Wrap.LOGGING_UNCAUGHT_EXCEPTION_HANDLER);
+   */
+  public static final Thread.UncaughtExceptionHandler LOG_WARN_UNCAUGHT_EXCEPTION_HANDLER = LOGGER;
+
   // Safe
 
   public static final Predicate2<Object,Throwable> P1_SILENT_IGNORE_ALL_FALSE = (a,t) -> silentIgnoreAll(t, false);
@@ -167,6 +193,34 @@ public class Wrap {
   public static <T> T cast (Class<? super T> toClazz, Object safer) throws ClassCastException, NullPointerException {
     return (T) toClazz.cast(safer);
   }
+
+
+  @SuppressWarnings({"unchecked", "rawtypes"})
+  public static <T extends Tuple> T tuple (Object... v) {
+    if (v == null || v.length == 0) {
+      return (T) new Tuple0();
+    }
+    switch (v.length) {
+      case 1: return (T) new Tuple1(v[0]);
+      case 2: return (T) new Tuple2(v[0],v[1]);
+      case 3: return (T) new Tuple3(v[0],v[1],v[2]);
+      case 4: return (T) new Tuple4(v[0],v[1],v[2],v[3]);
+      case 5: return (T) new Tuple5(v[0],v[1],v[2],v[3],v[4]);
+      case 6: return (T) new Tuple6(v[0],v[1],v[2],v[3],v[4],v[5]);
+      case 7: return (T) new Tuple7(v[0],v[1],v[2],v[3],v[4],v[5],v[6]);
+      case 8: return (T) new Tuple8(v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7]);
+      case 9: return (T) new Tuple9(v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7],v[8]);
+      case 10: return(T)new Tuple10(v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7],v[8],v[9]);
+      case 11: return(T)new Tuple11(v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7],v[8],v[9],v[10]);
+      case 12: return(T)new Tuple12(v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7],v[8],v[9],v[10],v[11]);
+      case 13: return(T)new Tuple13(v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7],v[8],v[9],v[10],v[11],v[12]);
+      case 14: return(T)new Tuple14(v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7],v[8],v[9],v[10],v[11],v[12],v[13]);
+      case 15: return(T)new Tuple15(v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7],v[8],v[9],v[10],v[11],v[12],v[13],v[14]);
+      case 16: return(T)new Tuple16(v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7],v[8],v[9],v[10],v[11],v[12],v[13],v[14],v[15]);
+      default: throw new IllegalArgumentException("Unknown Tuple degree: "+v.length+" "+ Arrays.toString(v));
+    }
+  }
+
 
   /** Same as {@link #handleInterruptedException(Throwable)}, but without casting.
    Will be automatically used in "catch (InterruptedException e)" */

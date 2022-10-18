@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.LongSummaryStatistics;
 import java.util.concurrent.atomic.AtomicLong;
@@ -206,7 +207,7 @@ public class LoopsTest {
         }
       }
     }
-    assertEquals("Incrementer[0, 0, 0]", x.toString());
+    assertEquals("Incrementer[0, 0, 0] @ 100000", x.toString());
     assertEquals(200, x.maxAt(0));
     assertEquals(50, x.maxAt(1));
     max[2] = 42;
@@ -265,4 +266,41 @@ public class LoopsTest {
   }
 
 
+  @Test
+  public void testIncrementerFunc () {
+    Loops.Incrementer x = new Loops.Incrementer(2, 2);
+    assertEquals("Incrementer[0, 0] @ 0", x.toString());
+
+    x.incrementIndexVector();//common state
+    assertEquals("Incrementer[1, 0] @ 1", x.toString());
+
+    Iterator<Loops.Incrementer> it1 = x.iterator();// start independent snapshot
+    assertEquals("Iterator.Incrementer[1, 0] @ 0 >", it1.toString());
+    it1.next();
+    assertEquals("Iterator.Incrementer[0, 1] @ 1 >", it1.toString());
+
+    Iterator<Loops.Incrementer> it2 = x.iterator();//continue independently, but from this place
+    assertEquals("Iterator.Incrementer[1, 0] @ 0 >", it2.toString());
+
+    it1.next();
+    assertEquals("Iterator.Incrementer[1, 1] @ 2 >", it1.toString());
+    it2.next();
+    assertEquals("Iterator.Incrementer[0, 1] @ 1 >", it2.toString());
+    x.incrementIndexVector();
+    assertEquals("Incrementer[0, 1] @ 2", x.toString());
+
+    it1.next();
+    assertEquals("Iterator.Incrementer[0, 0] @ 3 #", it1.toString());
+    it2.next();
+    assertEquals("Iterator.Incrementer[1, 1] @ 2 >", it2.toString());
+    x.incrementIndexVector();
+    assertEquals("Incrementer[1, 1] @ 3", x.toString());
+
+    it1.next();
+    assertEquals("Iterator.Incrementer[1, 0] @ 4 >", it1.toString());
+    it2.next();
+    assertEquals("Iterator.Incrementer[0, 0] @ 3 #", it2.toString());
+    x.incrementIndexVector();
+    assertEquals("Incrementer[0, 0] @ 4", x.toString());
+  }
 }

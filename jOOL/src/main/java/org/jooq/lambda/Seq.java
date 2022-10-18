@@ -9941,4 +9941,11 @@ public interface Seq<T> extends Stream<T>, Iterable<T>, Collectable<T> {
     default void print(PrintStream stream) {
         forEach(stream::println);
     }
+
+
+    /**
+     @see Collectable#toList
+     see Stream#toList
+     */
+    List<T> toList (); // makes IDEA and Error-Prone happy
 }
