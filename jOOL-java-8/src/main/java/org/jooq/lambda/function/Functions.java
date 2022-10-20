@@ -20,6 +20,7 @@ import org.jooq.lambda.Seq;
 import java.util.function.Predicate;
 
 /**
+ * Grouping operations on Predicates.
  * @author Lukas Eder
  */
 public final class Functions {
@@ -37,6 +38,7 @@ public final class Functions {
      * AND all predicates.
      */
     @SafeVarargs
+    @SuppressWarnings("varargs")
     public static <T> Predicate<T> and(Predicate<T>... predicates) {
         return Seq.of(predicates).reduce(t -> true, Predicate::and);
     }
@@ -45,6 +47,7 @@ public final class Functions {
      * OR all predicates.
      */
     @SafeVarargs
+    @SuppressWarnings("varargs")
     public static <T> Predicate<T> or(Predicate<T>... predicates) {
         return Seq.of(predicates).reduce(t -> false, Predicate::or);
     }

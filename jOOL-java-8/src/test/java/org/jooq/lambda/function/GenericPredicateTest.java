@@ -30,6 +30,7 @@ import static org.junit.Assert.*;
 
 public class GenericPredicateTest {
 
+  @SuppressWarnings("ConfusingArgumentToVarargsMethod")
   @Test public void dynamic () throws ClassNotFoundException {
     assertTrue(GenericPredicate.testDynamicPredicateVarArgs((Predicate0)()->true, null));
     assertFalse(GenericPredicate.testDynamicPredicateVarArgs((Predicate0)()->false));
@@ -146,7 +147,7 @@ public class GenericPredicateTest {
       final Class<?> cls = Class.forName("org.jooq.lambda.tuple.Tuple" + size);
 
       final Object[] args = new Object[size];
-      Loops.forLoop(size, (i) -> {args[i] = i + 10;});
+      Loops.forLoop(size, (i) -> args[i] = i + 10);
 
       for (Constructor<?> ctor : cls.getConstructors()) {
         if (ctor.getParameterCount() == size) {

@@ -112,6 +112,7 @@ public class Range<T extends Comparable<T>> extends Tuple2<T, T> {
      * </code></pre>
      * @deprecated - Use {@link #intersect(Range)} instead.
      */
+    @Deprecated
     public Optional<Range<T>> intersect(Tuple2<T, T> other) {
         return intersect(new Range<>(other));
     }
@@ -175,7 +176,7 @@ public class Range<T extends Comparable<T>> extends Tuple2<T, T> {
      * range(1, 3).contains(4)
      * </code></pre>
      */
-    public boolean contains(T t) {
+    public boolean contains(/*@Nullable*/T t) {
         return t != null
             && (v1 == null || v1.compareTo(t) <= 0)
             && (v2 == null || v2.compareTo(t) >= 0);
@@ -193,7 +194,7 @@ public class Range<T extends Comparable<T>> extends Tuple2<T, T> {
      * </code></pre>
      */
     public boolean contains(Range<T> other) {
-        return (other.v1 == null && v1 == null || contains(other.v1))
-            && (other.v2 == null && v2 == null || contains(other.v2));
+        return (other.v1 == v1 || contains(other.v1))
+            && (other.v2 == v2 || contains(other.v2));
     }
 }

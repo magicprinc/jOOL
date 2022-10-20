@@ -398,7 +398,7 @@ public interface Tuple extends Iterable<Object> {
     /**
      * Construct a tuple predicate of degree 0.
      */
-    static <R> Predicate1<Tuple0> predicate(BooleanSupplier predicate) {
+    static Predicate1<Tuple0> predicate(BooleanSupplier predicate) {
         return t -> predicate.getAsBoolean();
     }
 

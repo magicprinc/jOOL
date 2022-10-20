@@ -40,7 +40,7 @@ import static org.jooq.lambda.Seq.seq;
 class SeqUtils {
 
     @SafeVarargs
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "varargs"}) // Creating a stream from an array is safe
     static <T> Seq<T>[] seqs(Stream<? extends T>... streams) {
         if (streams == null)
             return null;
@@ -49,7 +49,7 @@ class SeqUtils {
     }
 
     @SafeVarargs
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "varargs"}) // Creating a stream from an array is safe
     static <T> Seq<T>[] seqs(Iterable<? extends T>... iterables) {
         if (iterables == null)
             return null;
@@ -125,7 +125,7 @@ class SeqUtils {
      * Sneaky throw any type of Throwable.
      */
     static void sneakyThrow(Throwable throwable) {
-        SeqUtils.<RuntimeException>sneakyThrow0(throwable);
+        SeqUtils.sneakyThrow0(throwable);
     }
 
     /**

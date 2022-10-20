@@ -184,7 +184,7 @@ public class Wrap {
    * or, if that doesn't work (e.g. X is a type variable)<br>
    *    Cast.&lt;X&gt;cast(y);
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked","TypeParameterUnusedInFormals"})
   public static <T> T castUnsafe (Object unsafe) throws ClassCastException, NullPointerException {
     return (T) unsafe;
   }

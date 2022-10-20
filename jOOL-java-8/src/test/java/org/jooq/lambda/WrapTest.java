@@ -21,6 +21,7 @@ import static org.jooq.lambda.Wrap.predicate;
 import static org.jooq.lambda.Wrap.predicateDef;
 import static org.junit.Assert.*;
 
+@SuppressWarnings("divzero")
 public class WrapTest {
 
   @Test(expected = ClassCastException.class)
