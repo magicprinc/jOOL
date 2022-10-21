@@ -5,6 +5,9 @@ import org.jooq.lambda.tuple.Tuple4;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LongSummaryStatistics;
+import java.util.concurrent.Callable;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.IntConsumer;
 import java.util.function.IntUnaryOperator;
 import java.util.function.LongConsumer;
@@ -251,8 +254,7 @@ public class Loops {
 
         @Override public Incrementer next () {
           boolean overflow = snapshot.incrementIndexVector();
-          hasNext = !overflow;
-
+          hasNext = hasNext && !overflow;
           return snapshot;
         }
 
@@ -266,5 +268,87 @@ public class Loops {
       return Seq.seq(this);
     }
   }//Incrementer
+
+
+  public interface SafeSelfConsumer<T> extends Consumer<T>, Runnable, Predicate<T> {
+    @Override default void accept (T obj) {
+      try {
+        execute(obj, this);
+      } catch (Throwable ex) {
+        Unchecked.throwUnchecked(ex);
+      }
+    }
+
+    @Override default void run () {
+      accept(null);
+    }
+
+    @Override default boolean test (T obj) {
+      accept(null);
+      return true;
+    }
+
+    void execute (T obj, SafeSelfConsumer<T> thiz) throws Throwable;
+  }//SafeSelfConsumer
+
+
+  public interface SafeSelfFunc<T,R> extends Consumer<T>, Runnable, Predicate<T>, Function<T,R>, Callable<R> {
+    @Override default void accept (T obj) {
+      try {
+        execute(obj, this);
+      } catch (Throwable ex) {
+        Unchecked.throwUnchecked(ex);
+      }
+    }
+
+    @Override default void run () {
+      accept(null);
+    }
+
+    @Override default boolean test (T obj) {
+      try {
+        R r = execute(null, this);
+        if (r instanceof Boolean) {
+          return (Boolean) r;
+        } else if (r instanceof Number) {
+          return ((Number)r).intValue() != 0;
+        } else {
+          return r != null;
+        }
+      } catch (Throwable ex) {
+        Unchecked.throwUnchecked(ex);
+        return false;
+      }
+    }
+
+    @Override default R call () throws Exception {
+      try {
+        return execute(null, this);
+      } catch (Throwable ex) {
+        Unchecked.throwUnchecked(ex);
+        return null;
+      }
+    }
+
+    @Override default R apply (T arg) {
+      try {
+        return execute(arg, this);
+      } catch (Throwable ex) {
+        Unchecked.throwUnchecked(ex);
+        return null;
+      }
+    }
+
+    R execute (T obj, SafeSelfFunc<T,R> thiz) throws Throwable;
+  }//SafeSelfFunc
+
+
+  public static <T> void recur (T start, SafeSelfConsumer<T> rconsumer) throws Throwable {
+    rconsumer.execute(start, rconsumer);
+  }
+
+  public static <T,R> R calc (T start, SafeSelfFunc<T,R> rfunc) throws Throwable {
+    return rfunc.execute(start, rfunc);
+  }
 
 }

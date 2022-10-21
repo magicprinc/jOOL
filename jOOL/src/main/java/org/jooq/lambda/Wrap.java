@@ -288,12 +288,32 @@ public class Wrap {
     return false;//failure
   }
 
+  public static boolean run (CheckedRunnable runSafely, Consumer<Throwable> handler) /*throws Error*/ {
+    try {
+      runSafely.run();
+      return true;//success
+    } catch (Throwable t) {
+      handler.accept(t);
+    }
+    return false;//failure
+  }
+
   public static boolean runStd (Runnable runSafely) /*throws Error*/ {
     try {
       runSafely.run();
       return true;//success
     } catch (Throwable t) {
       handleThrowable(runSafely, t);
+    }
+    return false;//failure
+  }
+
+  public static boolean runStd (Runnable runSafely, Consumer<Throwable> handler) /*throws Error*/ {
+    try {
+      runSafely.run();
+      return true;//success
+    } catch (Throwable t) {
+      handler.accept(t);
     }
     return false;//failure
   }
@@ -307,6 +327,14 @@ public class Wrap {
     }
   }
 
+  public static <T> T call (CheckedCallable<T> callSafely, Function<Throwable, T> handler) {
+    try {
+      return callSafely.call();
+    } catch (Throwable t) {
+      return handler.apply(t);
+    }
+  }
+
   public static <T> Either<T> callStd (Callable<T> callSafely) {
     try {
       return Either.success(callSafely.call());
@@ -315,8 +343,16 @@ public class Wrap {
     }
   }
 
+  public static <T> T callStd (Callable<T> callSafely, Function<Throwable, T> handler) {
+    try {
+      return callSafely.call();
+    } catch (Throwable t) {
+      return handler.apply(t);
+    }
+  }
 
-  // Runnable
+
+  //***** Runnable *****
 
 
   /** Wrap as safe {@link Runnable}: which logs Exceptions, doesn't throw them.

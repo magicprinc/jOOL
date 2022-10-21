@@ -297,10 +297,32 @@ public class LoopsTest {
     assertEquals("Incrementer[1, 1] @ 3", x.toString());
 
     it1.next();
-    assertEquals("Iterator.Incrementer[1, 0] @ 4 >", it1.toString());
+    assertEquals("Iterator.Incrementer[1, 0] @ 4 #", it1.toString());
     it2.next();
     assertEquals("Iterator.Incrementer[0, 0] @ 3 #", it2.toString());
     x.incrementIndexVector();
     assertEquals("Incrementer[0, 0] @ 4", x.toString());
+
+    //
+    x = new Loops.Incrementer(2, 2);
+    Iterator<Loops.Incrementer> xit = x.iterator();
+    assertFalse(xit instanceof Loops.Incrementer);
+    Loops.Incrementer next = null;
+    while (xit.hasNext()) {
+      System.out.println(xit);
+      Loops.Incrementer tmp = next;
+      next = xit.next();// >>>
+      if (tmp !=null) {
+        assertSame(tmp, next);
+      }
+      assertNotEquals(x, next);
+    }
+    assertFalse(xit.hasNext());
+    assertSame(next, xit.next());
+    System.out.println("\t"+xit);
+
+    assertFalse(xit.hasNext());
+    assertSame(next, xit.next());
+    System.out.println("\t"+xit);
   }
 }

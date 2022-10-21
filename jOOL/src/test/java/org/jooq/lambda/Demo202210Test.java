@@ -111,4 +111,60 @@ public class Demo202210Test {
     assertEquals(4, sz);
   }
 
+  int cntDir;
+  int cntFiles;
+  int cntFilesWithCr;
+  long totalSize;
+
+  Object THIS = this;
+
+  @Test
+  public void realTaskCrLfFiles () throws Throwable {
+    Path start = Paths.get("src");
+    Loops.recur(start, (file, fun)->{
+      if (Files.isRegularFile(file)) {
+        cntFiles++;
+
+        byte[] bytes = Files.readAllBytes(file);
+        totalSize += bytes.length;
+
+        for (byte b : bytes) {
+          if (b == '\r') {
+            cntFilesWithCr++;
+            System.out.println(file);
+            break;
+          }
+        }//f
+      } else {
+        cntDir++;
+
+        try (Stream<Path> list = Files.list(file)){
+          list.forEach(fun);
+        }
+      }//i file -or- dir
+    });
+    System.out.println(start.toAbsolutePath()+"\n\tdirs: "+cntDir+"\tTotal files: "+cntFiles
+      +", with CR: "+cntFilesWithCr+", bytes: "+totalSize);
+  }
+
+
+  @Test
+  public void recur () throws Throwable {
+    assertThrows(IOException.class, ()-> Loops.recur(null, (obj,thiz)->{
+      System.out.println("this: "+this+" = "+this.getClass());
+      System.out.println(Arrays.toString(this.getClass().getDeclaredClasses()));
+      System.out.println(Arrays.toString(this.getClass().getClasses()));
+
+      System.out.println("thiZ: "+thiz+" = "+thiz.getClass());
+      System.out.println(Arrays.toString(thiz.getClass().getDeclaredClasses()));
+      System.out.println(Arrays.toString(thiz.getClass().getClasses()));
+      assertTrue(thiz instanceof Loops.SafeSelfConsumer);
+      assertSame(THIS, this);
+      assertNull(obj);
+      throw new IOException("fake");
+    }));
+
+    Long r = Loops.calc(5L, (n,fun)-> n>1?n*fun.apply(n-1):1);
+    assertEquals(5*4*3*2, r.intValue());
+  }
 }
